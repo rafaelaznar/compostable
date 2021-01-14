@@ -1,2 +1,2 @@
 # TrolleyesAngularClient
-Angular Client for Trolleyes Server
+Angular Client for Trolleyes Server.
