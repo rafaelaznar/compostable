@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'TrolleyesAngularClient'`, () => {
+  it(`should have as title 'WildCartAngularClient'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('TrolleyesAngularClient');
+    expect(app.title).toEqual('WildCartAngularClient');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('TrolleyesAngularClient app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('WildCartAngularClient app is running!');
   });
 });
