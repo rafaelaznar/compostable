@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-paginator-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    /* change it based on your requirement */
+    width: 100%;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    border-bottom-width: 0px;
+}
