@@ -15,8 +15,8 @@ export class ProductoService {
     return this.httpClient.get<IProducto>(`${this.API_URL + 'producto'}/${id}`)
   }
 
-  getProductos() {
-    return this.httpClient.get<IPage>(`${this.API_URL + 'producto/page/'}`)
+  getProductos(page: number, rpp: number) {
+    return this.httpClient.get<IPage>(`${this.API_URL + 'producto/page?page=' + page + '&size=' + rpp}`)
   }
 
 }

@@ -18,6 +18,7 @@ import { ProductsComponent } from './component/producto/producto-plist/producto-
 import { ProductDetailComponent } from './component/producto/producto-detail/producto-detail.component';
 import { NoPageFoundComponent } from './component/no-page-found/no-page-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     MatSidenavModule,
     MatTableModule,
+    MatPaginatorModule,
     MatListModule,
     MatButtonModule,
     MatIconModule,
