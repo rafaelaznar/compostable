@@ -19,6 +19,19 @@
         <mat-icon>camera_front</mat-icon> Acerca de
       </a>
     </div>
+
+    <span class="toolbar-spacer"></span>
+    <div fxShow="true" fxHide.lt-md>
+      <!-- hidden on SM and XS -->
+
+      <a routerLinkActive="active" routerLink="/home" mat-button *ngIf="oUsuarioSession!=null">
+        <mat-icon aria-hidden="false" aria-label="Home">account_box</mat-icon>
+        Estás logueado como {{oUsuarioSession!.nombre}}
+      </a>
+      <button mat-raised-button color="accent" [routerLink]="['/login']" *ngIf="oUsuarioSession==null">Login</button>
+      <button mat-raised-button color="accent" [routerLink]="['/logout']" *ngIf="oUsuarioSession!=null">Logout</button>
+    </div>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
@@ -41,6 +54,7 @@
 
   <mat-sidenav-content fxFlexFill>
     <div style="padding: 20px;">
+
       <mat-card class="dashboard-card" class="mat-elevation-z9">
         <router-outlet></router-outlet>
       </mat-card>

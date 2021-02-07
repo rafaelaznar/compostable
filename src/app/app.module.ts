@@ -1,12 +1,38 @@
-import { MatMenuModule } from '@angular/material/menu';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+
+
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from "@angular/common/http";
@@ -18,7 +44,21 @@ import { ProductsComponent } from './component/producto/producto-plist/producto-
 import { ProductDetailComponent } from './component/producto/producto-detail/producto-detail.component';
 import { NoPageFoundComponent } from './component/no-page-found/no-page-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { LoginComponent } from './component/login/login.component';
+import { LogoutComponent } from './component/logout/logout.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+
+import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
+import { DialogsService } from './service/dialogs.service';
+import { SessionResolver } from './resolve/session.resolve';
+import { SessionService } from './service/session.service';
+
+
+
+
 
 @NgModule({
   declarations: [
@@ -27,26 +67,62 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     AboutComponent,
     ProductsComponent,
     ProductDetailComponent,
-    NoPageFoundComponent
+    NoPageFoundComponent,
+    LoginComponent,
+    LogoutComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
+
     FlexLayoutModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatSidenavModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatListModule,
+
+    MatCheckboxModule,
+    MatCheckboxModule,
     MatButtonModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatStepperModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatButtonToggleModule,
+    MatChipsModule,
     MatIconModule,
-    MatButtonModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+
+
+    FormsModule,
+    //FormControl,
+    //FormGroup,
+    ReactiveFormsModule,
+
+
+
   ],
-  providers: [],
+  providers: [DialogsService, SessionResolver, SessionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
