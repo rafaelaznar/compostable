@@ -4,7 +4,7 @@ import { SessionService } from 'src/app/service/session.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 
-import { ILogin, ISessionResolved, IUsuario } from 'src/app/model/model-interfaces';
+import { ILogin, IUsuario } from 'src/app/model/model-interfaces';
 
 import { DialogsService } from '../../service/dialogs.service';
 
@@ -17,27 +17,23 @@ import { DialogsService } from '../../service/dialogs.service';
 export class LoginComponent implements OnInit {
   public result: any;
   public data: any;
-  //formularioLogin: FormGroup;
-  public dataCheck: any;
   formularioLogin: FormGroup;
+  public dataCheck: any;
   stock = "hola mundo";
 
-  oSessionData: ISessionResolved;
-  oUsuarioSession: IUsuario | null;
+  oUsuarioSession: IUsuario | null = null;
 
-  constructor(private LoginService: SessionService,
+  constructor(
     private FormBuilder: FormBuilder,
-    private oRouter: Router,
+    private dialogsService: DialogsService,
     private oRoute: ActivatedRoute,
-    private dialogsService: DialogsService
-  ) {
+    private oRouter: Router,
+    private oSessionService: SessionService) {
 
-    this.oSessionData = this.oRoute.snapshot.data.message;
-    if (this.oSessionData.isError) {
-      this.oUsuarioSession = this.oSessionData.user;
-    } else {
-      this.oUsuarioSession = null;
+    if (this.oRoute.snapshot.data.message) {
       oRouter.navigate(['/home']);
+    } else {
+      this.oUsuarioSession = this.oRoute.snapshot.data.message;
     }
 
     //this.loginData = null; //{ user: "", password: "" };
@@ -66,7 +62,7 @@ export class LoginComponent implements OnInit {
     const formData: any = new FormData();
     const loginData = { login: this.formularioLogin.get('login')!.value, password: this.formularioLogin.get('password')!.value };
     console.log(formData);
-    this.LoginService.login(JSON.stringify(loginData)).subscribe(
+    this.oSessionService.login(JSON.stringify(loginData)).subscribe(
       data => {
         this.data = data;
 

@@ -5,7 +5,7 @@ import { tap, take, publishReplay, refCount, retry, catchError, map } from 'rxjs
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../app.component';
 import { of } from 'rxjs';
-import { CSessionResolved, ISessionResolved, IUsuario } from 'src/app/model/model-interfaces';
+import { IUsuario, Usuario } from 'src/app/model/model-interfaces';
 import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
@@ -33,34 +33,46 @@ export class SessionService {
         return throwError(errorMessage);
     }
 
-    headers = new HttpHeaders({
-        'Content-Type': 'application/json'
-    });
+    private httpOptions = {
+        headers: new HttpHeaders({
+            'Content-Type': 'application/json'
+        }),
+        withCredentials: true
+    };
+
+
 
     login(loginData: any): Observable<any> {
-        return this.http.post(this.url, loginData, {
-            withCredentials: true,
-            headers: this.headers
-        }).pipe(retry(1), catchError(this.handleError));
+        return this.http.post(this.url, loginData, this.httpOptions).pipe(
+            //tap((u: any) => console.log("session.service check HTTP request executed", u)),
+            retry(1), catchError(this.handleError));
     }
 
     logout(): Observable<any> {
-        return this.http.delete(this.url, {
-            withCredentials: true
-        }).pipe(retry(1), catchError(this.handleError));
+        return this.http.delete(this.url, this.httpOptions).pipe(retry(1), catchError(this.handleError));
     }
 
-    check(): Observable<ISessionResolved> {
-        return this.http.get(this.url, {
-            withCredentials: true
-        }).pipe(
-            map((usuario: any) => (new CSessionResolved(false, "", usuario)),
-                shareReplay(1)
-            ), catchError((error) => {
-                return of(new CSessionResolved(true, "ERROR: "));
-            }));
+    check(): Observable<IUsuario> {
+        console.log("session.service check");
+        return this.http.get<Usuario>(this.url, this.httpOptions).pipe(
+            //tap((u: any) => console.log("session.service check HTTP request executed", u)),            
+            shareReplay(1),
+            catchError(err => {
+                console.log('session.service: caught error and rethrowing', err);
+                return throwError(err);
+            })
+        )
     }
 
+
+    /*
+        check(): Observable<IUsuario | null> {
+            return this.http.get(this.url, { withCredentials: true }).pipe(
+                shareReplay(1),
+                catchError((error) => (of(null)))
+            );
+        }
+    */
 
 }
 

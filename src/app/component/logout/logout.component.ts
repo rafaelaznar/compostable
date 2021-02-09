@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ISessionResolved, IUsuario, Usuario } from 'src/app/model/model-interfaces';
+import { IUsuario, Usuario } from 'src/app/model/model-interfaces';
 import { SessionService } from 'src/app/service/session.service';
 
 @Component({
@@ -10,23 +10,41 @@ import { SessionService } from 'src/app/service/session.service';
   styleUrls: ['./logout.component.css']
 })
 
-export class LogoutComponent {
+export class LogoutComponent implements OnInit {
 
-  oSessionData: ISessionResolved;
-  oUsuarioSession: IUsuario | null;
+  oUsuarioSession: IUsuario | null = null;
 
   constructor(
     private oRoute: ActivatedRoute,
     private oRouter: Router,
     private oSessionService: SessionService) {
 
-    this.oSessionData = this.oRoute.snapshot.data.message;
-    if (!this.oSessionData.isError) {
-      this.oUsuarioSession = this.oSessionData.user;
-    } else {
-      this.oUsuarioSession = null;
+    console.log("logout.component constructor");
+    //console.log(this.oRoute.snapshot.data.message);
+
+
+    if (!this.oRoute.snapshot.data.message) {
       oRouter.navigate(['/home']);
+    } else {
+      this.oUsuarioSession = this.oRoute.snapshot.data.message;
     }
+
+    /*
+        this.oRoute.data.subscribe(
+          res => {
+            console.log("logout.component response= ", res.message);
+            this.oUsuarioSession = res.message;
+          },
+          err => {
+            console.log('logout.component HTTP Error', err);
+            oRouter.navigate(['/home']);
+          }
+        );
+    */
+  }
+
+  ngOnInit() {
+    console.log("logout.component ngOninit")
   }
 
   public closeSession() {

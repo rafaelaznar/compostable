@@ -1,5 +1,6 @@
 // from https://transform.tools/json-to-typescript
 
+/*
 export interface ISessionResolved {
     user: IUsuario | null;
     isError: boolean;
@@ -16,6 +17,7 @@ export class CSessionResolved implements ISessionResolved {
         this.isError = isError;
     }
 }
+*/
 export interface ITipousuario {
     id: number;
     nombre: string;
@@ -58,12 +60,7 @@ export class Usuario implements IUsuario {
     facturas: number = 0;
     carritos: number = 0;
     tipousuario: ITipousuario = new Tipousuario(0);
-    constructor(id: number) {
-        this.id = id;
-    }
 }
-
-
 
 export interface ILogin {
     login: string;
