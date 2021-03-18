@@ -36,16 +36,29 @@ export class AppComponent implements OnInit {
         */
 
 
-        this.oSessionService.check().pipe(
-          shareReplay()
-        ).subscribe((checkData: IUsuario) => {
-          console.log("app.component constructor: data from check: ");
-          this.oUsuarioSession = checkData;
-        }, err => {
-          this.oUsuarioSession = null;
-          console.log('app.component: HTTP Error: No active session', err)
-        })
+        if (Object.keys(JSON.parse(localStorage.getItem("user") || '{}')).length === 0) {
 
+          this.oUsuarioSession = null;
+
+
+          /*
+          this.oSessionService.check().pipe(
+            //shareReplay()
+          ).subscribe((checkData: IUsuario) => {
+            console.log("app.component constructor: check user data from check: ");
+            this.oUsuarioSession = checkData;
+            localStorage.setItem("user", JSON.stringify(checkData));
+          }, err => {
+            this.oUsuarioSession = null;
+            console.log('app.component: HTTP Error: No active session', err)
+          })
+          */
+        } else {
+
+          this.oUsuarioSession = JSON.parse(localStorage.getItem("user") || '{}');
+          console.log("app.component:constructor: check user data from localStorage!", this.oUsuarioSession);
+
+        }
 
 
       }

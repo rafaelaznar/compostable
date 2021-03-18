@@ -70,6 +70,8 @@ export class LoginComponent implements OnInit {
       data => {
         this.data = data;
 
+        localStorage.setItem("user", JSON.stringify(data));
+
         if (this.data != null) {
           this.oRouter.navigate(['/home']);
         } else {

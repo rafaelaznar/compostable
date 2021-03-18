@@ -40,11 +40,9 @@ export class SessionService {
         withCredentials: true
     };
 
-
-
     login(loginData: any): Observable<any> {
         return this.http.post(this.url, loginData, this.httpOptions).pipe(
-            //tap((u: any) => console.log("session.service check HTTP request executed", u)),
+            tap((u: any) => console.log("session.service login HTTP request executed", u)),
             retry(1), catchError(this.handleError));
     }
 
@@ -55,7 +53,7 @@ export class SessionService {
     check(): Observable<IUsuario> {
         console.log("session.service check");
         return this.http.get<Usuario>(this.url, this.httpOptions).pipe(
-            tap((u: any) => console.log("session.service check HTTP request executed", u)),            
+            tap((u: any) => console.log("session.service check HTTP request executed", u)),
             //shareReplay(),
             catchError(err => {
                 console.log('session.service: caught error and rethrowing', err);
@@ -64,6 +62,25 @@ export class SessionService {
         )
     }
 
+    /*
+    checkUser(): Observable<IUsuario | null> {
+
+        if (Object.keys(JSON.parse(localStorage.getItem("user") || '{}')).length === 0) {
+            this.check().pipe(
+            ).subscribe((checkData: IUsuario) => {
+                console.log("session.service checkUser: check user data from check: ");                
+                localStorage.setItem("user", JSON.stringify(checkData));
+                return of(checkData);
+            }, err => {
+                console.log('session.service checkUser: HTTP Error: No active session', err)
+                return of(null);                
+            })
+        } else {
+            console.log("session.service checkUser: check user data from localStorage!", JSON.parse(localStorage.getItem("user")|| '{}'));
+            return of(JSON.parse(localStorage.getItem("user")|| '{}'));         
+        }
+    }
+    */
 
     /*
         check(): Observable<IUsuario | null> {
