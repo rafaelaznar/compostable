@@ -55,8 +55,8 @@ export class SessionService {
     check(): Observable<IUsuario> {
         console.log("session.service check");
         return this.http.get<Usuario>(this.url, this.httpOptions).pipe(
-            //tap((u: any) => console.log("session.service check HTTP request executed", u)),            
-            shareReplay(1),
+            tap((u: any) => console.log("session.service check HTTP request executed", u)),            
+            //shareReplay(),
             catchError(err => {
                 console.log('session.service: caught error and rethrowing', err);
                 return throwError(err);

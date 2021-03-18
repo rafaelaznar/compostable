@@ -53,6 +53,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ConfirmDialogComponent } from './component/confirm-dialog/confirm-dialog.component';
 import { DialogsService } from './service/dialogs.service';
+import { CryptoService } from './service/crypto.service';
 import { SessionResolver } from './resolve/session.resolve';
 import { SessionService } from './service/session.service';
 
@@ -117,12 +118,12 @@ import { SessionService } from './service/session.service';
     FormsModule,
     //FormControl,
     //FormGroup,
-    ReactiveFormsModule,
+    ReactiveFormsModule
 
 
 
   ],
-  providers: [DialogsService, SessionResolver, SessionService],
+  providers: [DialogsService, SessionResolver, SessionService, CryptoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

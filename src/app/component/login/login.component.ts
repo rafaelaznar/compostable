@@ -8,6 +8,8 @@ import { ILogin, IUsuario } from 'src/app/model/model-interfaces';
 
 import { DialogsService } from '../../service/dialogs.service';
 
+import { CryptoService } from '../../service/crypto.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,9 +30,11 @@ export class LoginComponent implements OnInit {
     private dialogsService: DialogsService,
     private oRoute: ActivatedRoute,
     private oRouter: Router,
-    private oSessionService: SessionService) {
+    private oSessionService: SessionService,
+    private oCryptoService: CryptoService) {
 
     if (this.oRoute.snapshot.data.message) {
+      console.log("login", this.oRoute.snapshot.data.message);
       oRouter.navigate(['/home']);
     } else {
       this.oUsuarioSession = this.oRoute.snapshot.data.message;
@@ -60,8 +64,8 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const formData: any = new FormData();
-    const loginData = { login: this.formularioLogin.get('login')!.value, password: this.formularioLogin.get('password')!.value };
-    console.log(formData);
+    const loginData = { login: this.formularioLogin.get('login')!.value, password: this.oCryptoService.getSHA256(this.formularioLogin.get('password')!.value) };
+    console.log("login:onSubmit: ",loginData);
     this.oSessionService.login(JSON.stringify(loginData)).subscribe(
       data => {
         this.data = data;
