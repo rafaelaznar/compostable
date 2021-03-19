@@ -16,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class ProductsComponent implements OnInit {
   totalElements: number = 0;
+  pageIndex: number = 1;
   pageSize: number = 10;
   page: IPage = new Page();
   Products: IProducto[] | undefined;
@@ -28,9 +29,9 @@ export class ProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   //@ViewChild(MatSort) sort: MatSort | undefined;
 
-  getPage = (page: number, rpp: number) => {
+  getPage = (page: number, rpp: number, filter: string | undefined = undefined) => {
     this.loading = true;
-    this.productoService.getProductos(page, rpp).subscribe((page: IPage) => {
+    this.productoService.getProductos(page, rpp, filter).subscribe((page: IPage) => {
       this.page = page;
       this.Products = page.content;
       this.totalElements = page['totalElements'];
@@ -48,7 +49,7 @@ export class ProductsComponent implements OnInit {
   }
 
   constructor(private productoService: ProductoService, private router: Router, private _location: Location) {
-    this.getPage(1, 10);
+    this.getPage(this.pageIndex, this.pageSize, this.strToFind);
   }
 
   ngOnInit() {
@@ -60,6 +61,12 @@ export class ProductsComponent implements OnInit {
 
   goBack() {
     this._location.back();
+  }
+
+  strToFind: string | undefined = undefined;
+  onSubmitFindForm() {
+    console.log(this.strToFind);
+    this.getPage(this.pageIndex, this.pageSize, this.strToFind);
   }
 
 }
