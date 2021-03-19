@@ -16,7 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class ProductsComponent implements OnInit {
   totalElements: number = 0;
-  pageIndex: number = 1;
+  pageIndex: number = 0;
   pageSize: number = 10;
   page: IPage = new Page();
   Products: IProducto[] | undefined;
@@ -29,14 +29,16 @@ export class ProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   //@ViewChild(MatSort) sort: MatSort | undefined;
 
-  getPage = (page: number, rpp: number, filter: string | undefined = undefined) => {
+  getPage = (pageNumber: number, rpp: number, filter: string | undefined = undefined) => {
     this.loading = true;
-    this.productoService.getProductos(page, rpp, filter).subscribe((page: IPage) => {
-      this.page = page;
-      this.Products = page.content;
-      this.totalElements = page['totalElements'];
-      this.dataSource = new MatTableDataSource(page.content);
-      console.log(this.dataSource);
+    this.productoService.getProductos(pageNumber, rpp, filter).subscribe((oPage: IPage) => {
+      this.page = oPage;
+      this.Products = oPage.content;
+      this.totalElements = oPage['totalElements'];
+      this.dataSource = new MatTableDataSource(oPage.content);
+      //console.log(this.dataSource);   
+      this.pageSize = oPage['size'];
+      this.pageIndex = pageNumber;
       this.loading = false;
     }, error => {
       console.log(error);
@@ -45,7 +47,7 @@ export class ProductsComponent implements OnInit {
   }
 
   nextPage(event: PageEvent) {
-    this.getPage(event.pageIndex, event.pageSize);
+    this.getPage(event.pageIndex, event.pageSize, this.strToFind);
   }
 
   constructor(private productoService: ProductoService, private router: Router, private _location: Location) {
@@ -65,8 +67,8 @@ export class ProductsComponent implements OnInit {
 
   strToFind: string | undefined = undefined;
   onSubmitFindForm() {
-    console.log(this.strToFind);
-    this.getPage(this.pageIndex, this.pageSize, this.strToFind);
+    //console.log(this.strToFind);
+    this.getPage(0, this.pageSize, this.strToFind);
   }
 
 }
