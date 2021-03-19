@@ -16,11 +16,12 @@ import { MatTableDataSource } from '@angular/material/table';
 
 export class ProductsComponent implements OnInit {
   totalElements: number = 0;
+  totalPages: number = 0;
   pageIndex: number = 0;
   pageSize: number = 10;
   page: IPage = new Page();
   Products: IProducto[] | undefined;
-  columnas: string[] = ['id', 'nombre', 'codigo', 'precio', 'existencias', 'herramientas'];
+  columnas: string[] = ['id', 'nombre', 'codigo', 'precio', 'existencias', 'tipo', 'herramientas'];
   loading: boolean = false;
 
   //new MatTableDataSource(<IProducto> response);
@@ -35,6 +36,7 @@ export class ProductsComponent implements OnInit {
       this.page = oPage;
       this.Products = oPage.content;
       this.totalElements = oPage['totalElements'];
+      this.totalPages = oPage['totalPages'];
       this.dataSource = new MatTableDataSource(oPage.content);
       //console.log(this.dataSource);   
       this.pageSize = oPage['size'];
