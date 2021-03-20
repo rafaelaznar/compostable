@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-producto-plist',
@@ -15,6 +16,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 
 export class ProductsComponent implements OnInit {
+  currentSort: Sort | undefined = undefined;
   totalElements: number = 0;
   totalPages: number = 0;
   pageIndex: number = 0;
@@ -30,9 +32,9 @@ export class ProductsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   //@ViewChild(MatSort) sort: MatSort | undefined;
 
-  getPage = (pageNumber: number, rpp: number, filter: string | undefined = undefined) => {
+  getPage = (pageNumber: number, rpp: number, sort: Sort | undefined = undefined, filter: string | undefined = undefined) => {
     this.loading = true;
-    this.productoService.getProductos(pageNumber, rpp, filter).subscribe((oPage: IPage) => {
+    this.productoService.getProductos(pageNumber, rpp, sort, filter).subscribe((oPage: IPage) => {
       this.page = oPage;
       this.Products = oPage.content;
       this.totalElements = oPage['totalElements'];
@@ -49,11 +51,11 @@ export class ProductsComponent implements OnInit {
   }
 
   nextPage(event: PageEvent) {
-    this.getPage(event.pageIndex, event.pageSize, this.strToFind);
+    this.getPage(event.pageIndex, event.pageSize, this.currentSort, this.strToFind);
   }
 
   constructor(private productoService: ProductoService, private router: Router, private _location: Location) {
-    this.getPage(this.pageIndex, this.pageSize, this.strToFind);
+    this.getPage(this.pageIndex, this.pageSize, this.currentSort, this.strToFind);
   }
 
   ngOnInit() {
@@ -70,7 +72,13 @@ export class ProductsComponent implements OnInit {
   strToFind: string | undefined = undefined;
   onSubmitFindForm() {
     //console.log(this.strToFind);
-    this.getPage(0, this.pageSize, this.strToFind);
+    this.getPage(0, this.pageSize, this.currentSort, this.strToFind);
+  }
+
+  sortData(sort: Sort) {
+    console.log("sorting");
+    this.currentSort = sort;
+    this.getPage(this.pageIndex, this.pageSize, sort, this.strToFind);
   }
 
 }
