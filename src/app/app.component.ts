@@ -18,12 +18,11 @@ export class AppComponent implements OnInit {
   constructor(public oSessionService: SessionService, private router: Router) {
 
 
-
-
-
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         /* Your code goes here on every router change */
+        console.log("app.component  ev", ev);
+
 
         /*
                 this.oSessionService.check().pipe(
@@ -40,6 +39,10 @@ export class AppComponent implements OnInit {
 
           this.oUsuarioSession = null;
 
+          if (ev.url != "/producto" && ev.url != "/" && ev.url != "/home" && ev.url != "/about" && ev.url != "/login") {
+            console.log("app.component navigate to login");
+            router.navigate(['/login']);
+          }
 
           /*
           this.oSessionService.check().pipe(

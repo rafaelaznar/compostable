@@ -40,7 +40,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './component/home/home.component';
 import { AboutComponent } from './component/about/about.component';
-import { ProductsComponent } from './component/producto/producto-plist/producto-plist.component';
+import { ProductoEventsPlistComponent } from './component/producto/producto-plist/producto-events-plist.component';
 import { ProductDetailComponent } from './component/producto/producto-detail/producto-detail.component';
 import { NoPageFoundComponent } from './component/no-page-found/no-page-found.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -56,6 +56,8 @@ import { DialogsService } from './service/dialogs.service';
 import { CryptoService } from './service/crypto.service';
 import { SessionResolver } from './resolve/session.resolve';
 import { SessionService } from './service/session.service';
+import { MenuComponent } from './component/menu/menu.component';
+import { ProductoRoutedPlistComponent } from './component/producto/producto-routed-plist/producto-routed-plist.component';
 
 
 
@@ -66,12 +68,14 @@ import { SessionService } from './service/session.service';
     AppComponent,
     HomeComponent,
     AboutComponent,
-    ProductsComponent,
+    ProductoEventsPlistComponent,
+    ProductoRoutedPlistComponent,
     ProductDetailComponent,
     NoPageFoundComponent,
     LoginComponent,
     LogoutComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -113,7 +117,7 @@ import { SessionService } from './service/session.service';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-
+    
 
     FormsModule,
     //FormControl,
