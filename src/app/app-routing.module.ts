@@ -15,7 +15,12 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'producto-plist', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist/:page', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist/:page/:rpp', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist/:page/:rpp/:sort', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist/:page/:rpp/:sort/:dir', component: ProductoRoutedPlistComponent },
+  { path: 'producto/plist/:page/:rpp/:sort/:dir/:filter', component: ProductoRoutedPlistComponent },
   { path: 'producto-detail/:id', component: ProductDetailComponent },
   { path: 'login', component: LoginComponent, resolve: { message: SessionResolver } },
   { path: 'logout', component: LogoutComponent, resolve: { message: SessionResolver } },
@@ -23,6 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  //imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

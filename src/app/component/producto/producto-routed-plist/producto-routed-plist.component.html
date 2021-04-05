@@ -1,96 +1,207 @@
+<div class="loader" [hidden]="!loading">
+</div>
+
 <app-menu></app-menu>
 
-<div class="container-fluid px-4 mt-5 pt-5">
-    
-    <div class="row justify-content-center">
-        <div class="col">
-
-            <h3>Listado de productos</h3>
-        </div>
-    </div>
-
+<div class="container-fluid px-5" style="margin-top: 90px;" [hidden]="loading">
     <div class="row">
         <div class="col">
-            <form class="find-form" (submit)="onSubmitFindForm()">
-                <mat-form-field class="full-width">
-                    <mat-label>Buscar un producto</mat-label>
-                    <input matInput placeholder="Introduce parte del nombre, del id o del código y pulsa enter"
-                        name="strFind" [(ngModel)]="strToFind">
-                </mat-form-field>
-            </form>
-
-            <div class="align-right">
-                Página {{pageIndex +1}} de {{totalPages}}
+            <div class="d-flex justify-content-between">
+                <h3>Listado de productos</h3>
+                <form (submit)="onSubmitFindForm()" style="width: 30%;">
+                    <mat-form-field class="full-width">
+                        <mat-label>Buscar un producto</mat-label>
+                        <input matInput placeholder="Introduce parte del nombre, del id o del código y pulsa enter"
+                            name="currentFilter" [(ngModel)]="currentFilter">
+                    </mat-form-field>
+                </form>
             </div>
-
-            <mat-paginator [pageSizeOptions]="[10, 25, 100]" [pageSize]="pageSize" [length]="totalElements"
-                (page)="nextPage($event)">
-            </mat-paginator>
-
-            <mat-progress-bar mode="determinate" value="{{(pageIndex +1)*100/totalPages}}"></mat-progress-bar>
-
-
-            <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" matSortActive="id"
-                matSortDirection="asc">
-
-                <ng-container matColumnDef="id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
-                    <td mat-cell *matCellDef="let products"> {{products.id}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="nombre">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                    <td mat-cell *matCellDef="let products"> {{products.nombre}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="codigo">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Código </th>
-                    <td mat-cell *matCellDef="let products"> {{products.codigo}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="existencias">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="align-center"> Existencias
-                    </th>
-                    <td mat-cell *matCellDef="let products" class="align-center"> {{products.existencias}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="precio">
-                    <th mat-header-cell *matHeaderCellDef class="align-center"> Precio </th>
-                    <td mat-cell *matCellDef="let products" class="align-right"> {{products.precio}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="tipo">
-                    <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                    <td mat-cell *matCellDef="let products"> {{products.tipoproducto.nombre}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="herramientas">
-                    <th mat-header-cell *matHeaderCellDef> Herramientas </th>
-                    <td mat-cell *matCellDef="let products">
-
-                        <button mat-icon-button color="primary" aria-label="Detalles"
-                            [routerLink]="['/producto-detail/', products.id]">
-                            <mat-icon>visibility</mat-icon>
-                        </button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-
-            </table>
         </div>
     </div>
-
-    <div class="row mt-5">
+    <div class="row">
         <div class="col">
+            <div class="d-flex justify-content-between">
+
+                <nav aria-label="rpp">
+                    <ul class="pagination">
+                        <li class="page-item" [ngClass]="{'active':(currentPageSize==10)}">
+                            <a class="page-link"
+                                href="{{entity}}/plist/{{currentPageIndex}}/10/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                tabindex="-1" aria-disabled="true">10</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{'active':(currentPageSize==50)}">
+                            <a class="page-link"
+                                href="{{entity}}/plist/{{currentPageIndex}}/50/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                tabindex="-1" aria-disabled="true">50</a>
+                        </li>
+                        <li class="page-item" [ngClass]="{'active':(currentPageSize==100)}">
+                            <a class="page-link"
+                                href="{{entity}}/plist/{{currentPageIndex}}/100/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                tabindex="-1" aria-disabled="true">100</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav aria-label="pagination">
+                    <ul class="pagination">
+                        <li class="page-item" *ngFor="let p of paginationPad track by $index"
+                            [ngClass]="{'active':((currentPageIndex+'')==p)}">
+                            <a class="page-link" *ngIf="p != '...'"
+                                href="{{entity}}/plist/{{p}}/{{currentPageSize}}/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}">{{p}}</a>
+                            <span class="page-link" *ngIf="p == '...'" disabled="true">{{p}}</span>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
+            <table class="table table-striped table-sm">
+                <tr>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='id'&&currentSortDirection=='asc')||currentSortField!='id'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/desc/{{currentFilter}}">id
+                        </a>
+                        <a *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/asc/{{currentFilter}}">id
+                        </a>
+                        <i class="fas fa-arrow-up" *ngIf="currentSortField=='id'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down" *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='codigo'&&currentSortDirection=='asc')||currentSortField!='codigo'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/desc/{{currentFilter}}">código
+                        </a>
+                        <a *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/asc/{{currentFilter}}">código
+                        </a>
+                        <i class="fas fa-arrow-up" *ngIf="currentSortField=='codigo'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down"
+                            *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='nombre'&&currentSortDirection=='asc')||currentSortField!='nombre'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/desc/{{currentFilter}}">nombre
+                        </a>
+                        <a *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/asc/{{currentFilter}}">nombre
+                        </a>
+                        <i class="fas fa-arrow-up" *ngIf="currentSortField=='nombre'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down"
+                            *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='tipo'&&currentSortDirection=='asc')||currentSortField!='tipo'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/desc/{{currentFilter}}">tipo
+                        </a>
+                        <a *ngIf="currentSortField=='tipo'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/asc/{{currentFilter}}">tipo
+                        </a>
+                        <i class="fas fa-arrow-up" *ngIf="currentSortField=='tipo'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down" *ngIf="currentSortField=='tipo'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='existencias'&&currentSortDirection=='asc')||currentSortField!='existencias'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/desc/{{currentFilter}}">existencias
+                        </a>
+                        <a *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/asc/{{currentFilter}}">existencias
+                        </a>
+                        <i class="fas fa-arrow-up"
+                            *ngIf="currentSortField=='existencias'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down"
+                            *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='precio'&&currentSortDirection=='asc')||currentSortField!='precio'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/desc/{{currentFilter}}">precio
+                        </a>
+                        <a *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/asc/{{currentFilter}}">precio
+                        </a>
+                        <i class="fas fa-arrow-up" *ngIf="currentSortField=='precio'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down"
+                            *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        <a *ngIf="(currentSortField=='descuento'&&currentSortDirection=='asc')||currentSortField!='descuento'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/desc/{{currentFilter}}">descuento
+                        </a>
+                        <a *ngIf="currentSortField=='descuento'&&currentSortDirection=='desc'"
+                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/asc/{{currentFilter}}">descuento
+                        </a>
+                        <i class="fas fa-arrow-up"
+                            *ngIf="currentSortField=='descuento'&&currentSortDirection=='asc'"></i>
+                        <i class="fas fa-arrow-down"
+                            *ngIf="currentSortField=='descuento'&&currentSortDirection=='desc'"></i>
+                    </th>
+                    <th class="text-center">
+                        imagen<br>
+                    </th>
+                    <th class="text-center">
+                        compras<br>
+                    </th>
+                    <th class="text-center">
+                        carritos<br>
+                    </th>
+                    <th style="width: 5%" class="text-center">
+                        herramientas
+                    </th>
+                </tr>
+                <tr *ngFor="let fila of page.content">
+                    <td class="text-center">{{fila.id}}</td>
+                    <td class="text-left font-weight-bold">{{fila.codigo}} </td>
+                    <td>{{fila.nombre}}</td>
+                    <td><a href="tipoproducto/view/{{fila.tipoproducto.id}}">{{fila.tipoproducto.nombre}}</a>&nbsp;
+                        <a href="producto/tipoproducto////{{fila.id}}">({{fila.tipoproducto.productos}} productos)</a>
+
+                    </td>
+                    <td class="text-center">{{fila.existencias|number}}</td>
+                    <td class="text-right">{{fila.precio}} €</td>
+                    <td class="text-center">{{fila.descuento}} %</td>
+                    <td class="text-center"><img src="http://localhost:8082/file/{{fila.imagen}}" height="50" /></td>
+                    <td class="text-center"><a href="compra/{{entity}}////{{fila.id}}"
+                            *ngIf="fila.compras>0">{{fila.compras}}</a></td>
+                    <td class="text-center"><a href="carrito/{{entity}}////{{fila.id}}"
+                            *ngIf="fila.carritos>0">{{fila.carritos}}</a>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-12 text-left">
+                                <div class="btn-group" role="group" aria-label="Herramientas">
+                                    <a class="btn btn-success" href="{{entity}}/view/{{fila.id}}">
+                                        <i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-primary" href="{{entity}}/edit/{{fila.id}}">
+                                        <i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-danger" href="{{entity}}/remove/{{fila.id}}"
+                                        ng-if="fila.carritos==0&&fila.facturas==0"> <i class="fas fa-times"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
             <div class="control-group text-right">
                 <div class="controls">
-                    <a class="btn btn-info" [routerLink]="['/home']"><i ng-class="fas fa-home"></i> Ir a home</a>
-                    <a class="btn btn-info ml-3" (click)="goBack()"><i ng-class="fas fa-home"></i> Volver </a>
+                    <a class="btn btn-primary mr-2" [routerLink]="['/home']"><i class="fas fa-home"></i> Ir a home</a>
+                    <a class="btn btn-primary" (click)="goBack()"><i class="fas fa-arrow-circle-left"></i> Volver </a>
                 </div>
             </div>
+
         </div>
     </div>
-
+    <footer class="pt-3 border-top" style="height: 80px;">
+        <div class="row">
+            <div class="col-12 col-md">
+                <span class="text-muted">WILDCART &copy; MIT licensed BY Rafael Aznar & DAW students, 2020 </span>
+                <span class="text-muted">
+                    <a href="https://github.com/rafaelaznar/WildCartAngularClient"> <i class="fab fa-github"></i>
+                        CLIENT </a>
+                    <a href="https://github.com/rafaelaznar/trolleyesSBserver"> <i class="fab fa-github"></i>
+                        SERVER</a>
+                </span>
+            </div>
+        </div>
+    </footer>
 </div>
+

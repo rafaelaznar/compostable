@@ -34,4 +34,21 @@ export class ProductoService {
     return this.httpClient.get<IPage>(strRequest)
   }
 
+  getProductosBootstrap(page: number, rpp: number, currentSortField: string, currentSortDirection: string, filter: string | undefined = undefined) {
+    let strRequest = `${this.API_URL + 'producto/page?page=' + page + '&size=' + rpp}`;
+    if (filter) {
+      strRequest += "&filter=" + filter;
+    }
+    if (currentSortField) {
+      strRequest += "&sort=" + currentSortField;
+      if (currentSortDirection) {
+        strRequest += "," + currentSortDirection;
+      } else {
+        strRequest += ",asc";
+      }
+    }
+
+    return this.httpClient.get<IPage>(strRequest)
+  }
+
 }
