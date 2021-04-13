@@ -9,6 +9,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PaginationService } from 'src/app/service/pagination.service';
 
 @Component({
   selector: 'app-producto-routed-plist',
@@ -28,7 +29,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
   totalElements: number = 0;
   totalPages: number = 0;
   page: IPage = new Page();
-  Products: IProducto[] | undefined;
+  entities: IProducto[] | undefined;
 
   loading: boolean = false;
 
@@ -40,37 +41,52 @@ export class ProductoRoutedPlistComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   //@ViewChild(MatSort) sort: MatSort | undefined;
 
-  pagination = (pages: number, page: number) => {
-    console.log("pag", pages, page);
-    let botonera: string[] = [];
-    let i: number;
-    let neighbourhood: number = 2;
-    for (i = 1; i <= pages; i++) {
-      if (i == 1) {
-        botonera.push(i.toString());
-      } else if (i > (page - neighbourhood) && i < (page + neighbourhood)) {
-        botonera.push(i.toString());
-      } else if (i == pages) {
-        botonera.push(i.toString());
-      } else if (i == (page - neighbourhood) || i == (page + neighbourhood)) {
-        botonera.push('...');
+  constructor(
+    private productoService: ProductoService,
+    private oRouter: Router,
+    private oActivatedRoute: ActivatedRoute, 
+    private _location: Location, 
+    private _snackBar: MatSnackBar,
+    private paginationService: PaginationService,
+    ) {
+    oActivatedRoute.params.subscribe(val => {
+      if (this.oActivatedRoute.snapshot.params.page) {
+        this.currentPageIndex = Number(this.oActivatedRoute.snapshot.params.page);
+        if ((this.currentPageIndex) <= 0) {
+          this.currentPageIndex = 1;
+        }
+      } else {
+        this.currentPageIndex = 1;
       }
-    }
-    return botonera;
+      if (this.oActivatedRoute.snapshot.params.rpp) {
+        this.currentPageSize = Number(this.oActivatedRoute.snapshot.params.rpp);
+        if ((this.currentPageSize) > 100) {
+          this.currentPageSize = 100;
+        }
+      } else {
+        this.currentPageSize = 10;
+      }
+      this.currentSortField = (this.oActivatedRoute.snapshot.params.sort);
+      this.currentSortDirection = (this.oActivatedRoute.snapshot.params.dir);
+      this.currentFilter = (this.oActivatedRoute.snapshot.params.filter);
+      this.getPage(this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter);
+    });
   }
 
+
+
   getPage = (pageNumber: number, rpp: number, sortField: string, sortDirection: string, filter: string | undefined = undefined) => {
-    this._snackBar.open("Cargando datos","Por favor espera...");
+    this._snackBar.open("Cargando datos", "Por favor espera...");
     this.loading = true;
     this.productoService.getProductosBootstrap(pageNumber - 1, rpp, sortField, sortDirection, filter).subscribe((oPage: IPage) => {
       if (pageNumber > oPage['totalPages']) {
         pageNumber = oPage['totalPages'];
         this.productoService.getProductosBootstrap(pageNumber - 1, rpp, sortField, sortDirection, filter).subscribe((oPage: IPage) => {
           this.page = oPage;
-          this.Products = oPage.content;
+          this.entities = oPage.content;
           this.totalElements = oPage['totalElements'];
           this.totalPages = oPage['totalPages'];
-          this.paginationPad = this.pagination(this.totalPages, this.currentPageIndex);
+          this.paginationPad = this.paginationService.pagination(this.totalPages, this.currentPageIndex);
           this.currentPageSize = oPage['size'];
           this.currentPageIndex = pageNumber;
         }, error => {
@@ -92,10 +108,10 @@ export class ProductoRoutedPlistComponent implements OnInit {
         })
       } else {
         this.page = oPage;
-        this.Products = oPage.content;
+        this.entities = oPage.content;
         this.totalElements = oPage['totalElements'];
         this.totalPages = oPage['totalPages'];
-        this.paginationPad = this.pagination(this.totalPages, this.currentPageIndex);
+        this.paginationPad = this.paginationService.pagination(this.totalPages, this.currentPageIndex);
         this.currentPageSize = oPage['size'];
         this.currentPageIndex = pageNumber;
       }
@@ -128,30 +144,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
     });
   }
 
-  constructor(private productoService: ProductoService, private oRouter: Router, private oActivatedRoute: ActivatedRoute, private _location: Location, private _snackBar: MatSnackBar) {
-    oActivatedRoute.params.subscribe(val => {
-      if (this.oActivatedRoute.snapshot.params.page) {
-        this.currentPageIndex = Number(this.oActivatedRoute.snapshot.params.page);
-        if ((this.currentPageIndex) <= 0) {
-          this.currentPageIndex = 1;
-        }
-      } else {
-        this.currentPageIndex = 1;
-      }
-      if (this.oActivatedRoute.snapshot.params.rpp) {
-        this.currentPageSize = Number(this.oActivatedRoute.snapshot.params.rpp);
-        if ((this.currentPageSize) >100) {
-          this.currentPageSize = 100;
-        }
-      } else {
-        this.currentPageSize = 10;
-      }
-      this.currentSortField = (this.oActivatedRoute.snapshot.params.sort);
-      this.currentSortDirection = (this.oActivatedRoute.snapshot.params.dir);
-      this.currentFilter = (this.oActivatedRoute.snapshot.params.filter);
-      this.getPage(this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter);
-    });
-  }
+
 
   ngOnInit() {
   }
@@ -161,8 +154,8 @@ export class ProductoRoutedPlistComponent implements OnInit {
   }
 
   onSubmitFindForm() {
-    console.log("onSubmitFindForm", this.currentFilter);
-    this.oRouter.navigate(['/producto/plist/', this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter]);
+    //console.log("onSubmitFindForm", this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter);
+    this.oRouter.navigate(['/producto/plist/', this.currentPageIndex, this.currentPageSize, this.currentSortField || "", this.currentSortDirection || "", this.currentFilter || ""]);
 
   }
 
