@@ -7,10 +7,11 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-between">
-                <h3><i class="fas fa-gift"></i> Listado de productos ({{totalElements}})</h3>
-                <form (submit)="onSubmitFindForm()" style="width: 30%;">                    
+                <h2><i class="fas fa-gift"></i> Listado de {{entitiesName}}</h2>
+              
+                <form (submit)="onSubmitFindForm()">
                     <mat-form-field class="full-width">
-                        <mat-label>Buscar un producto</mat-label>
+                        <mat-label>Filtrar {{entitiesName}}</mat-label>
                         <input matInput placeholder="Introduce parte del nombre, del id o del código y pulsa enter"
                             name="currentFilter" [(ngModel)]="currentFilter">
                     </mat-form-field>
@@ -26,28 +27,38 @@
                     <ul class="pagination">
                         <li class="page-item" [ngClass]="{'active':(currentPageSize==10)}">
                             <a class="page-link"
-                                href="{{entity}}/plist/{{currentPageIndex}}/10/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                href="{{entityName}}/plist/{{currentPageIndex}}/10/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
                                 tabindex="-1" aria-disabled="true">10</a>
                         </li>
                         <li class="page-item" [ngClass]="{'active':(currentPageSize==50)}">
                             <a class="page-link"
-                                href="{{entity}}/plist/{{currentPageIndex}}/50/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                href="{{entityName}}/plist/{{currentPageIndex}}/50/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
                                 tabindex="-1" aria-disabled="true">50</a>
                         </li>
                         <li class="page-item" [ngClass]="{'active':(currentPageSize==100)}">
                             <a class="page-link"
-                                href="{{entity}}/plist/{{currentPageIndex}}/100/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
+                                href="{{entityName}}/plist/{{currentPageIndex}}/100/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}/"
                                 tabindex="-1" aria-disabled="true">100</a>
                         </li>
                     </ul>
                 </nav>
+
+                <h5>
+                    <span class="badge badge-pill badge-primary">{{totalElements}} registros</span>
+                    <span class="badge badge-pill badge-warning" *ngIf="initialFilter">Filtro:
+                        "{{oActivatedRoute.snapshot.params.filter}}"
+                        <a
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/{{currentSortField}}/{{currentSortDirection}}/"><i
+                                class="fas fa-times"></i></a>
+                    </span>
+                </h5>
 
                 <nav aria-label="pagination">
                     <ul class="pagination">
                         <li class="page-item" *ngFor="let p of paginationPad track by $index"
                             [ngClass]="{'active':((currentPageIndex+'')==p)}">
                             <a class="page-link" *ngIf="p != '...'"
-                                href="{{entity}}/plist/{{p}}/{{currentPageSize}}/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}">{{p}}</a>
+                                href="{{entityName}}/plist/{{p}}/{{currentPageSize}}/{{currentSortField}}/{{currentSortDirection}}/{{currentFilter}}">{{p}}</a>
                             <span class="page-link" *ngIf="p == '...'" disabled="true">{{p}}</span>
                         </li>
                     </ul>
@@ -59,20 +70,20 @@
                 <tr>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='id'&&currentSortDirection=='asc')||currentSortField!='id'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/desc/{{currentFilter}}">id
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/desc/{{currentFilter}}">id
                         </a>
                         <a *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/asc/{{currentFilter}}">id
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/asc/{{currentFilter}}">id
                         </a>
                         <i class="fas fa-arrow-up" *ngIf="currentSortField=='id'&&currentSortDirection=='asc'"></i>
                         <i class="fas fa-arrow-down" *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"></i>
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='codigo'&&currentSortDirection=='asc')||currentSortField!='codigo'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/desc/{{currentFilter}}">código
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/desc/{{currentFilter}}">código
                         </a>
                         <a *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/asc/{{currentFilter}}">código
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/asc/{{currentFilter}}">código
                         </a>
                         <i class="fas fa-arrow-up" *ngIf="currentSortField=='codigo'&&currentSortDirection=='asc'"></i>
                         <i class="fas fa-arrow-down"
@@ -80,10 +91,10 @@
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='nombre'&&currentSortDirection=='asc')||currentSortField!='nombre'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/desc/{{currentFilter}}">nombre
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/desc/{{currentFilter}}">nombre
                         </a>
                         <a *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/asc/{{currentFilter}}">nombre
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/asc/{{currentFilter}}">nombre
                         </a>
                         <i class="fas fa-arrow-up" *ngIf="currentSortField=='nombre'&&currentSortDirection=='asc'"></i>
                         <i class="fas fa-arrow-down"
@@ -91,20 +102,20 @@
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='tipo'&&currentSortDirection=='asc')||currentSortField!='tipo'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/desc/{{currentFilter}}">tipo
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/desc/{{currentFilter}}">tipo
                         </a>
                         <a *ngIf="currentSortField=='tipo'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/asc/{{currentFilter}}">tipo
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipo/asc/{{currentFilter}}">tipo
                         </a>
                         <i class="fas fa-arrow-up" *ngIf="currentSortField=='tipo'&&currentSortDirection=='asc'"></i>
                         <i class="fas fa-arrow-down" *ngIf="currentSortField=='tipo'&&currentSortDirection=='desc'"></i>
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='existencias'&&currentSortDirection=='asc')||currentSortField!='existencias'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/desc/{{currentFilter}}">existencias
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/desc/{{currentFilter}}">existencias
                         </a>
                         <a *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/asc/{{currentFilter}}">existencias
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/asc/{{currentFilter}}">existencias
                         </a>
                         <i class="fas fa-arrow-up"
                             *ngIf="currentSortField=='existencias'&&currentSortDirection=='asc'"></i>
@@ -113,10 +124,10 @@
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='precio'&&currentSortDirection=='asc')||currentSortField!='precio'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/desc/{{currentFilter}}">precio
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/desc/{{currentFilter}}">precio
                         </a>
                         <a *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/asc/{{currentFilter}}">precio
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/asc/{{currentFilter}}">precio
                         </a>
                         <i class="fas fa-arrow-up" *ngIf="currentSortField=='precio'&&currentSortDirection=='asc'"></i>
                         <i class="fas fa-arrow-down"
@@ -124,10 +135,10 @@
                     </th>
                     <th class="text-center">
                         <a *ngIf="(currentSortField=='descuento'&&currentSortDirection=='asc')||currentSortField!='descuento'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/desc/{{currentFilter}}">descuento
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/desc/{{currentFilter}}">descuento
                         </a>
                         <a *ngIf="currentSortField=='descuento'&&currentSortDirection=='desc'"
-                            href="{{entity}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/asc/{{currentFilter}}">descuento
+                            href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/asc/{{currentFilter}}">descuento
                         </a>
                         <i class="fas fa-arrow-up"
                             *ngIf="currentSortField=='descuento'&&currentSortDirection=='asc'"></i>
@@ -158,21 +169,21 @@
                     <td class="text-center">{{fila.existencias|number}}</td>
                     <td class="text-right">{{fila.precio}} €</td>
                     <td class="text-center">{{fila.descuento}} %</td>
-                    <td class="text-center"><img src="http://localhost:8082/file/{{fila.imagen}}" height="50" /></td>
-                    <td class="text-center"><a href="compra/{{entity}}////{{fila.id}}"
+                    <td class="text-center"><img src="http://localhost:8082/file/{{fila.imagen}}" height="30" /></td>
+                    <td class="text-center"><a href="compra/{{entityName}}////{{fila.id}}"
                             *ngIf="fila.compras>0">{{fila.compras}}</a></td>
-                    <td class="text-center"><a href="carrito/{{entity}}////{{fila.id}}"
+                    <td class="text-center"><a href="carrito/{{entityName}}////{{fila.id}}"
                             *ngIf="fila.carritos>0">{{fila.carritos}}</a>
                     </td>
                     <td>
                         <div class="row">
                             <div class="col-md-12 text-left">
                                 <div class="btn-group" role="group" aria-label="Herramientas">
-                                    <a class="btn btn-success" href="{{entity}}/view/{{fila.id}}">
+                                    <a class="btn btn-success btn-sm" href="{{entityName}}/view/{{fila.id}}">
                                         <i class="fas fa-eye"></i></a>
-                                    <a class="btn btn-primary" href="{{entity}}/edit/{{fila.id}}">
+                                    <a class="btn btn-primary btn-sm" href="{{entityName}}/edit/{{fila.id}}">
                                         <i class="fas fa-edit"></i></a>
-                                    <a class="btn btn-danger" href="{{entity}}/remove/{{fila.id}}"
+                                    <a class="btn btn-danger btn-sm" href="{{entityName}}/remove/{{fila.id}}"
                                         ng-if="fila.carritos==0&&fila.facturas==0"> <i class="fas fa-times"></i></a>
                                 </div>
                             </div>
@@ -181,7 +192,7 @@
                 </tr>
             </table>
 
-            <div class="control-group text-right">
+            <div class="control-group text-center">
                 <div class="controls">
                     <a class="btn btn-primary mr-2" [routerLink]="['/home']"><i class="fas fa-home"></i> Ir a home</a>
                     <a class="btn btn-primary" (click)="goBack()"><i class="fas fa-arrow-circle-left"></i> Volver </a>
@@ -204,4 +215,3 @@
         </div>
     </footer>
 </div>
-

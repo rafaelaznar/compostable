@@ -1,12 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { IPage, IProducto, Page, Producto } from 'src/app/model/model-interfaces';
+import { Component, OnInit } from '@angular/core';
+import { IPage, IProducto, Page } from 'src/app/model/model-interfaces';
 import { ProductoService } from 'src/app/service/producto.service';
 
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
-
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { PaginationService } from 'src/app/service/pagination.service';
@@ -18,12 +15,14 @@ import { PaginationService } from 'src/app/service/pagination.service';
 })
 
 export class ProductoRoutedPlistComponent implements OnInit {
-  entity: String = "producto";
+  entityName: String = "producto";
+  entitiesName: String = "productos";
 
   currentPageIndex: number = 0;
   currentPageSize: number = 10;
   currentSortField: string = "id";
-  currentSortDirection: string = "asc";
+  currentSortDirection: string = "asc";  
+  initialFilter: string = "";
   currentFilter: string = "";
 
   totalElements: number = 0;
@@ -34,13 +33,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
   loading: boolean = false;
 
   paginationPad: string[] = [];
-
-  //new MatTableDataSource(<IProducto> response);
-  dataSource: MatTableDataSource<IProducto> = new MatTableDataSource();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  //@ViewChild(MatSort) sort: MatSort | undefined;
-
+  
   constructor(
     private productoService: ProductoService,
     private oRouter: Router,
@@ -68,12 +61,11 @@ export class ProductoRoutedPlistComponent implements OnInit {
       }
       this.currentSortField = (this.oActivatedRoute.snapshot.params.sort);
       this.currentSortDirection = (this.oActivatedRoute.snapshot.params.dir);
-      this.currentFilter = (this.oActivatedRoute.snapshot.params.filter);
+      this.initialFilter = (this.oActivatedRoute.snapshot.params.filter);
+      this.currentFilter =this.initialFilter;
       this.getPage(this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter);
     });
   }
-
-
 
   getPage = (pageNumber: number, rpp: number, sortField: string, sortDirection: string, filter: string | undefined = undefined) => {
     this._snackBar.open("Cargando datos", "Por favor espera...");
@@ -144,8 +136,6 @@ export class ProductoRoutedPlistComponent implements OnInit {
     });
   }
 
-
-
   ngOnInit() {
   }
 
@@ -153,8 +143,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
     this._location.back();
   }
 
-  onSubmitFindForm() {
-    //console.log("onSubmitFindForm", this.currentPageIndex, this.currentPageSize, this.currentSortField, this.currentSortDirection, this.currentFilter);
+  onSubmitFindForm() {    
     this.oRouter.navigate(['/producto/plist/', this.currentPageIndex, this.currentPageSize, this.currentSortField || "", this.currentSortDirection || "", this.currentFilter || ""]);
 
   }
