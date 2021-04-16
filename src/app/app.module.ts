@@ -58,10 +58,7 @@ import { SessionResolver } from './resolve/session.resolve';
 import { SessionService } from './service/session.service';
 import { MenuComponent } from './component/menu/menu.component';
 import { ProductoRoutedPlistComponent } from './component/producto/producto-routed-plist/producto-routed-plist.component';
-
-
-
-
+import { ProductoRoutedViewComponent } from './component/producto/producto-routed-view/producto-routed-view.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +67,7 @@ import { ProductoRoutedPlistComponent } from './component/producto/producto-rout
     AboutComponent,
     ProductoEventsPlistComponent,
     ProductoRoutedPlistComponent,
+    ProductoRoutedViewComponent,
     ProductDetailComponent,
     NoPageFoundComponent,
     LoginComponent,

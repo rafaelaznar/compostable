@@ -145,7 +145,6 @@ export class ProductoRoutedPlistComponent implements OnInit {
 
   onSubmitFindForm() {    
     this.oRouter.navigate(['/producto/plist/', this.currentPageIndex, this.currentPageSize, this.currentSortField || "", this.currentSortDirection || "", this.currentFilter || ""]);
-
   }
 
 }
