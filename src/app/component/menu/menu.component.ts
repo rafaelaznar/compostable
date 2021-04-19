@@ -7,15 +7,13 @@ import { NavigationEnd, Router } from '@angular/router';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
+
 export class MenuComponent implements OnInit {
   oUsuarioSession: IUsuario | null = null;
   constructor(private router: Router) {
-    console.log("menu component");
+    //console.log("menu component");
     this.oUsuarioSession = JSON.parse(localStorage.getItem("user") || '{}');
-    console.log("-->", this.oUsuarioSession);
-
-
-
+    //console.log("-->", this.oUsuarioSession);
   }
 
   ngOnInit() {

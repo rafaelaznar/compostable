@@ -7,6 +7,7 @@ import { LogoutComponent } from './component/logout/logout.component';
 import { NoPageFoundComponent } from './component/no-page-found/no-page-found.component';
 import { ProductDetailComponent } from './component/producto/producto-detail/producto-detail.component';
 import { ProductoRoutedPlistComponent } from './component/producto/producto-routed-plist/producto-routed-plist.component';
+import { ProductoRoutedRemoveComponent } from './component/producto/producto-routed-remove/producto-routed-remove.component';
 import { ProductoRoutedViewComponent } from './component/producto/producto-routed-view/producto-routed-view.component';
 
 
@@ -23,8 +24,9 @@ const routes: Routes = [
   { path: 'producto/plist/:page/:rpp/:sort/:dir', component: ProductoRoutedPlistComponent },
   { path: 'producto/plist/:page/:rpp/:sort/:dir/:filter', component: ProductoRoutedPlistComponent },
   { path: 'producto/view/:id', component: ProductoRoutedViewComponent },
+  { path: 'producto/remove/:id', component: ProductoRoutedRemoveComponent },
 
-  { path: 'producto-detail/:id', component: ProductDetailComponent },
+  { path: 'producto-detail/:id', component: ProductDetailComponent },  
   { path: 'login', component: LoginComponent, resolve: { message: SessionResolver } },
   { path: 'logout', component: LogoutComponent, resolve: { message: SessionResolver } },
   { path: '**', component: NoPageFoundComponent }

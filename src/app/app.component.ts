@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     this.router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         /* Your code goes here on every router change */
-        console.log("app.component  ev", ev);
+        //console.log("app.component  ev", ev);
 
 
         /*
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
           this.oUsuarioSession = null;
 
           if (ev.url != "/producto" && ev.url != "/" && ev.url != "/home" && ev.url != "/about" && ev.url != "/login") {
-            console.log("app.component navigate to login");
+            //console.log("app.component navigate to login");
             router.navigate(['/login']);
           }
 
@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
         } else {
 
           this.oUsuarioSession = JSON.parse(localStorage.getItem("user") || '{}');
-          console.log("app.component:constructor: check user data from localStorage!", this.oUsuarioSession);
+          //console.log("app.component:constructor: check user data from localStorage!", this.oUsuarioSession);
 
         }
 
@@ -73,8 +73,8 @@ export class AppComponent implements OnInit {
   }
 
   onCheck(checkData: any) {
-    console.log("onCheck de app.component: checkData: ");
-    console.log(checkData);
+    //console.log("onCheck de app.component: checkData: ");
+    //console.log(checkData);
   }
 
 }
