@@ -10,7 +10,7 @@
                 <h2><i class="fas fa-gift"></i> Listado de {{entitiesName}}</h2>
 
                 <form (submit)="onSubmitFindForm()">
-                    <mat-form-field class="full-width">
+                    <mat-form-field>
                         <mat-label>Filtrar {{entitiesName}}</mat-label>
                         <input matInput placeholder="Introduce parte del nombre, del id o del código y pulsa enter"
                             name="currentFilter" [(ngModel)]="currentFilter">
