@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IProducto, objectElement, Producto } from 'src/app/model/model-interfaces';
 import { ProductoService } from 'src/app/service/producto.service';
 import { Location } from '@angular/common';
@@ -18,6 +18,7 @@ export class ProductoRoutedViewComponent {
   loading: boolean = false;
 
   constructor(
+    private oRouter: Router,
     private actRoute: ActivatedRoute,
     private productoService: ProductoService,
     private _snackBar: MatSnackBar,
@@ -35,6 +36,23 @@ export class ProductoRoutedViewComponent {
     this.productoService.getProducto(id).subscribe((producto: IProducto) => {
       this.entityData = producto;
       this.loading = false;
+    }, error => {
+      if (error.status == 401) {
+        //se ha perdido la sesión        
+        this.openSnackBar("Su sesión ha expirado. Por favor debe volver a autenticarse en la página de login.", "ERROR DE SESIÓN");
+        localStorage.clear();
+        if (this.oRouter !== undefined) {
+          this.oRouter.navigate(['/login']);
+        }
+      } else {
+        //servidor caido
+        this.openSnackBar("Hay algún problema técnico con el servidor en Internet. Por favor avise al técnico de la aplicación.", "ERROR DE SERVIDOR");
+        localStorage.clear();
+        if (this.oRouter !== undefined) {
+          this.oRouter.navigate(['/home']);
+        }
+      }
+      this.loading = false;      
     })
   }
 

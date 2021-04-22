@@ -81,6 +81,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
           this.paginationPad = this.paginationService.pagination(this.totalPages, this.currentPageIndex);
           this.currentPageSize = oPage['size'];
           this.currentPageIndex = pageNumber;
+          this._snackBar.dismiss();
         }, error => {
           if (error.status == 401) {
             //se ha perdido la sesión        
@@ -106,9 +107,9 @@ export class ProductoRoutedPlistComponent implements OnInit {
         this.paginationPad = this.paginationService.pagination(this.totalPages, this.currentPageIndex);
         this.currentPageSize = oPage['size'];
         this.currentPageIndex = pageNumber;
+        this._snackBar.dismiss();
       }
-      this.loading = false;
-      this._snackBar.dismiss();
+      this.loading = false;      
     }, error => {
       if (error.status == 401) {
         //se ha perdido la sesión        
@@ -125,8 +126,7 @@ export class ProductoRoutedPlistComponent implements OnInit {
           this.oRouter.navigate(['/home']);
         }
       }
-      this.loading = false;
-      this._snackBar.dismiss();
+      this.loading = false;      
     })
   }
 

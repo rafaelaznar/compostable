@@ -60,12 +60,16 @@ export class LoginComponent implements OnInit {
     return false; // if you don't return false pops console ERROR TypeError: this.selector is not a function
   }
 
-
+  public loginAdmin() { //debug!!
+    this.formularioLogin.controls['login'].setValue("admin");
+    this.formularioLogin.controls['password'].setValue("trolleyes");
+    this.onSubmit();
+  }
 
   onSubmit() {
     const formData: any = new FormData();
     const loginData = { login: this.formularioLogin.get('login')!.value, password: this.oCryptoService.getSHA256(this.formularioLogin.get('password')!.value) };
-    console.log("login:onSubmit: ",loginData);
+    console.log("login:onSubmit: ", loginData);
     this.oSessionService.login(JSON.stringify(loginData)).subscribe(
       data => {
         this.data = data;
@@ -83,5 +87,12 @@ export class LoginComponent implements OnInit {
     return false;
   }
 
+
+
+  check() {
+    console.log("login:check: ");
+    this.oSessionService.check().subscribe(data => { console.log("check result: ", data) }
+    );
+  }
 
 }

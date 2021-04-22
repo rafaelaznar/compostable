@@ -7,6 +7,7 @@ import { AppComponent } from '../app.component';
 import { of } from 'rxjs';
 import { IUsuario, Usuario } from 'src/app/model/model-interfaces';
 import { shareReplay } from 'rxjs/operators';
+import { ConfigService } from './config.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +15,12 @@ import { shareReplay } from 'rxjs/operators';
 
 export class SessionService {
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(
+        private oConfigService: ConfigService,
+        private http: HttpClient,
+        private router: Router) { }
 
-    url = 'http://localhost:8082/session/';
+    sURL = this.oConfigService.API_URL + '/session/';
 
     onCheck = new EventEmitter<any>();
 
@@ -40,19 +44,22 @@ export class SessionService {
         withCredentials: true
     };
 
-    login(loginData: any): Observable<any> {
-        return this.http.post(this.url, loginData, this.httpOptions).pipe(
+    login(loginData: any): Observable<IUsuario> {
+        return this.http.post(this.sURL, loginData, this.httpOptions).pipe(
             tap((u: any) => console.log("session.service login HTTP request executed", u)),
-            retry(1), catchError(this.handleError));
+            retry(1),
+            catchError(this.handleError));
     }
 
     logout(): Observable<any> {
-        return this.http.delete(this.url, this.httpOptions).pipe(retry(1), catchError(this.handleError));
+        return this.http.delete(this.sURL, this.httpOptions).pipe(
+            retry(1),
+            catchError(this.handleError));
     }
 
     check(): Observable<IUsuario> {
         console.log("session.service check");
-        return this.http.get<Usuario>(this.url, this.httpOptions).pipe(
+        return this.http.get<IUsuario>(this.sURL, this.httpOptions).pipe(
             tap((u: any) => console.log("session.service check HTTP request executed", u)),
             //shareReplay(),
             catchError(err => {

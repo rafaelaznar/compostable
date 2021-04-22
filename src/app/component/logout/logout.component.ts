@@ -65,4 +65,11 @@ export class LogoutComponent implements OnInit {
           })
       */
   }
+
+
+  check() {
+    console.log("logout:check: ");
+    this.oSessionService.check().subscribe(data => { console.log("check result: ", data) }
+    );
+  }
 }

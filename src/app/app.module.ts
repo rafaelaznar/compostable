@@ -60,6 +60,8 @@ import { MenuComponent } from './component/menu/menu.component';
 import { ProductoRoutedPlistComponent } from './component/producto/producto-routed-plist/producto-routed-plist.component';
 import { ProductoRoutedViewComponent } from './component/producto/producto-routed-view/producto-routed-view.component';
 import { ProductoRoutedRemoveComponent } from './component/producto/producto-routed-remove/producto-routed-remove.component';
+import { SnackbarService } from './service/snackbar.service';
+import { ConfigService } from './service/config.service';
 
 @NgModule({
   declarations: [
@@ -129,7 +131,7 @@ import { ProductoRoutedRemoveComponent } from './component/producto/producto-rou
 
 
   ],
-  providers: [DialogsService, SessionResolver, SessionService, CryptoService],
+  providers: [DialogsService, SessionResolver, SessionService, CryptoService,SnackbarService,ConfigService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-between">
-                <h2><i class="fas fa-gift"></i> Detalle de {{entityName}}</h2>
+                <h2><i class="fas fa-gift"></i> Borrado de {{entityName}}</h2>
                 <img src="http://localhost:8082/file/{{entityData?.imagen}}" height="100" />
             </div>
         </div>
@@ -52,7 +52,10 @@
             </table>
 
             <div class="control-group text-center mt-5">
-                <div class="controls">
+                <h3>¿Está seguro de que desea borrar el registro?</h3>
+                <div class="controls">                    
+                    <a class="btn btn-danger mr-2" (click)="remove()"><i class="fas fa-thumbs-up"></i> Si</a>
+                    <a class="btn btn-info mr-2" (click)="goBack()"><i class="fas fa-thumbs-down"></i> No</a>                    
                     <a class="btn btn-primary mr-2" [routerLink]="['/home']"><i class="fas fa-home"></i> Ir a home</a>
                     <a class="btn btn-primary" (click)="goBack()"><i class="fas fa-arrow-circle-left"></i> Volver </a>
                 </div>
