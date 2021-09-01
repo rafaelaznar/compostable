@@ -7,7 +7,8 @@
     <div class="row">
         <div class="col">
             <div class="d-flex justify-content-between">
-                <h2><i class="fas fa-gift"></i> Listado de {{entitiesName}}</h2>
+                <h2><i class="fas fa-gift"></i> Listado de {{entitiesName}}
+                    <a class="btn btn-primary" [routerLink]="['/producto/new']"><i class="fas fa-plus-square"></i></a></h2>
 
                 <form (submit)="onSubmitFindForm()">
                     <mat-form-field>
@@ -69,22 +70,28 @@
             <table class="table table-bordered table-sm">
                 <thead>
                     <tr>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='id','text-white':currentSortField=='id'}">
-                            <a *ngIf="(currentSortField=='id'&&currentSortDirection=='asc')||currentSortField!='id'" [ngClass]="{'text-white':currentSortField=='id'}"                           
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='id','text-white':currentSortField=='id'}">
+                            <a *ngIf="(currentSortField=='id'&&currentSortDirection=='asc')||currentSortField!='id'"
+                                [ngClass]="{'text-white':currentSortField=='id'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/desc/{{currentFilter}}">id
                             </a>
-                            <a *ngIf="currentSortField=='id'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='id'}"
+                            <a *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='id'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/id/asc/{{currentFilter}}">id
                             </a>
                             <i class="fas fa-arrow-up" *ngIf="currentSortField=='id'&&currentSortDirection=='asc'"></i>
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='id'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='codigo','text-white':currentSortField=='codigo'}">
-                            <a *ngIf="(currentSortField=='codigo'&&currentSortDirection=='asc')||currentSortField!='codigo'" [ngClass]="{'text-white':currentSortField=='codigo'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='codigo','text-white':currentSortField=='codigo'}">
+                            <a *ngIf="(currentSortField=='codigo'&&currentSortDirection=='asc')||currentSortField!='codigo'"
+                                [ngClass]="{'text-white':currentSortField=='codigo'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/desc/{{currentFilter}}">código
                             </a>
-                            <a *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='codigo'}"
+                            <a *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='codigo'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/codigo/asc/{{currentFilter}}">código
                             </a>
                             <i class="fas fa-arrow-up"
@@ -92,11 +99,14 @@
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='codigo'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='nombre','text-white':currentSortField=='nombre'}">
-                            <a *ngIf="(currentSortField=='nombre'&&currentSortDirection=='asc')||currentSortField!='nombre'" [ngClass]="{'text-white':currentSortField=='nombre'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='nombre','text-white':currentSortField=='nombre'}">
+                            <a *ngIf="(currentSortField=='nombre'&&currentSortDirection=='asc')||currentSortField!='nombre'"
+                                [ngClass]="{'text-white':currentSortField=='nombre'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/desc/{{currentFilter}}">nombre
                             </a>
-                            <a *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='nombre'}"
+                            <a *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='nombre'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/nombre/asc/{{currentFilter}}">nombre
                             </a>
                             <i class="fas fa-arrow-up"
@@ -104,11 +114,14 @@
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='nombre'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='tipoproducto','text-white':currentSortField=='tipoproducto'}">
-                            <a *ngIf="(currentSortField=='tipoproducto'&&currentSortDirection=='asc')||currentSortField!='tipoproducto'" [ngClass]="{'text-white':currentSortField=='tipoproducto'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='tipoproducto','text-white':currentSortField=='tipoproducto'}">
+                            <a *ngIf="(currentSortField=='tipoproducto'&&currentSortDirection=='asc')||currentSortField!='tipoproducto'"
+                                [ngClass]="{'text-white':currentSortField=='tipoproducto'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipoproducto/desc/{{currentFilter}}">tipo
                             </a>
-                            <a *ngIf="currentSortField=='tipoproducto'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='tipoproducto'}"
+                            <a *ngIf="currentSortField=='tipoproducto'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='tipoproducto'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/tipoproducto/asc/{{currentFilter}}">tipo
                             </a>
                             <i class="fas fa-arrow-up"
@@ -116,11 +129,14 @@
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='tipoproducto'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='existencias','text-white':currentSortField=='existencias'}">
-                            <a *ngIf="(currentSortField=='existencias'&&currentSortDirection=='asc')||currentSortField!='existencias'" [ngClass]="{'text-white':currentSortField=='existencias'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='existencias','text-white':currentSortField=='existencias'}">
+                            <a *ngIf="(currentSortField=='existencias'&&currentSortDirection=='asc')||currentSortField!='existencias'"
+                                [ngClass]="{'text-white':currentSortField=='existencias'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/desc/{{currentFilter}}">existencias
                             </a>
-                            <a *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='existencias'}"
+                            <a *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='existencias'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/existencias/asc/{{currentFilter}}">existencias
                             </a>
                             <i class="fas fa-arrow-up"
@@ -128,11 +144,14 @@
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='existencias'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='precio','text-white':currentSortField=='precio'}">
-                            <a *ngIf="(currentSortField=='precio'&&currentSortDirection=='asc')||currentSortField!='precio'" [ngClass]="{'text-white':currentSortField=='precio'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='precio','text-white':currentSortField=='precio'}">
+                            <a *ngIf="(currentSortField=='precio'&&currentSortDirection=='asc')||currentSortField!='precio'"
+                                [ngClass]="{'text-white':currentSortField=='precio'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/desc/{{currentFilter}}">precio
                             </a>
-                            <a *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='precio'}"
+                            <a *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='precio'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/precio/asc/{{currentFilter}}">precio
                             </a>
                             <i class="fas fa-arrow-up"
@@ -140,11 +159,14 @@
                             <i class="fas fa-arrow-down"
                                 *ngIf="currentSortField=='precio'&&currentSortDirection=='desc'"></i>
                         </th>
-                        <th class="text-center" [ngClass]="{'bg-primary':currentSortField=='descuento','text-white':currentSortField=='descuento'}">
-                            <a *ngIf="(currentSortField=='descuento'&&currentSortDirection=='asc')||currentSortField!='descuento'" [ngClass]="{'text-white':currentSortField=='descuento'}"
+                        <th class="text-center"
+                            [ngClass]="{'bg-primary':currentSortField=='descuento','text-white':currentSortField=='descuento'}">
+                            <a *ngIf="(currentSortField=='descuento'&&currentSortDirection=='asc')||currentSortField!='descuento'"
+                                [ngClass]="{'text-white':currentSortField=='descuento'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/desc/{{currentFilter}}">descuento
                             </a>
-                            <a *ngIf="currentSortField=='descuento'&&currentSortDirection=='desc'" [ngClass]="{'text-white':currentSortField=='descuento'}"
+                            <a *ngIf="currentSortField=='descuento'&&currentSortDirection=='desc'"
+                                [ngClass]="{'text-white':currentSortField=='descuento'}"
                                 href="{{entityName}}/plist/{{currentPageIndex}}/{{currentPageSize}}/descuento/asc/{{currentFilter}}">descuento
                             </a>
                             <i class="fas fa-arrow-up"

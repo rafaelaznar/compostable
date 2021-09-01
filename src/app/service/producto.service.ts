@@ -23,6 +23,8 @@ export class ProductoService {
     private httpClient: HttpClient
   ) { }
 
+  newProducto = (oProducto: IProducto) => this.httpClient.post<IProducto>(this.sURL, oProducto, this.httpOptions);
+
   getProducto = (id: number) => this.httpClient.get<IProducto>(this.sURL + id, this.httpOptions);
 
   removeProducto = (id: number) => this.httpClient.delete<number>(this.sURL + id, this.httpOptions);

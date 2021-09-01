@@ -1,0 +1,105 @@
+<app-menu></app-menu>
+
+<div class="loader" [hidden]="!loading">
+</div>
+
+<div class="container-fluid px-5" style="margin-top: 90px;" [hidden]="loading">
+    <div class="row">
+        <div class="col">
+
+            <div class="d-flex justify-content-between">
+                <h2><i class="fas fa-gift"></i> Nuevo {{entityName}}</h2>
+            </div>
+
+            <div class="row" style="margin-top: 30px;">
+                <div class="col-5  mx-auto">
+
+                    <form novalidate [formGroup]="oForm" (ngSubmit)="onSubmit()">
+                        <div class="row mb-3">
+                            <label for="id" class="col-sm-2 col-form-label">Id</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="id" formControlName="id">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="codigo" class="col-sm-2 col-form-label">Código</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="codigo" formControlName="codigo">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="nombre" class="col-sm-2 col-form-label">Nombre</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="existencias" class="col-sm-2 col-form-label">Existencias</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="existencias"
+                                    formControlName="existencias">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="precio" class="col-sm-2 col-form-label">Precio</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="precio" formControlName="precio">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="descuento" class="col-sm-2 col-form-label">Descuento</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="descuento" formControlName="descuento">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="tipoproducto" class="col-sm-2 col-form-label">Tipo de producto</label>
+                            <div class="col-sm-10">
+                                <input type="number" class="form-control" id="tipoproducto"
+                                    formControlName="tipoproducto">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-10 offset-sm-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
+                                    <label class="form-check-label" for="gridCheck1">
+                                        Example checkbox
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" [disabled]="oForm.invalid">Nuevo</button>
+
+                    </form>
+
+                    <p>Form Status: {{ oForm.status}}</p>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="pt-3 border-top" style="height: 80px;">
+        <div class="row">
+            <div class="col-12 col-md">
+                <span class="text-muted">WILDCART &copy; MIT licensed BY Rafael Aznar & DAW students, 2020 </span>
+                <span class="text-muted">
+                    <a href="https://github.com/rafaelaznar/WildCartAngularClient"> <i class="fab fa-github"></i>
+                        CLIENT </a>
+                    <a href="https://github.com/rafaelaznar/trolleyesSBserver"> <i class="fab fa-github"></i>
+                        SERVER</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+</div>

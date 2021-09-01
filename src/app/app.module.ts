@@ -62,6 +62,7 @@ import { ProductoRoutedViewComponent } from './component/producto/producto-route
 import { ProductoRoutedRemoveComponent } from './component/producto/producto-routed-remove/producto-routed-remove.component';
 import { SnackbarService } from './service/snackbar.service';
 import { ConfigService } from './service/config.service';
+import { ProductoRoutedNewComponent } from './component/producto/producto-routed-new/producto-routed-new.component';
 
 @NgModule({
   declarations: [
@@ -73,13 +74,15 @@ import { ConfigService } from './service/config.service';
     ProductoRoutedPlistComponent,
     ProductoRoutedViewComponent,
     ProductoRoutedRemoveComponent,
+    ProductoRoutedNewComponent,
 
     ProductDetailComponent,
     NoPageFoundComponent,
     LoginComponent,
     LogoutComponent,
     ConfirmDialogComponent,
-    MenuComponent
+    MenuComponent,
+    ProductoRoutedNewComponent
   ],
   imports: [
     BrowserModule,
