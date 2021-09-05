@@ -12,20 +12,21 @@
             </div>
 
             <div class="row" style="margin-top: 30px;">
-                <div class="col-5  mx-auto">
+                <div class="col-12  mx-auto">
 
                     <form novalidate [formGroup]="oForm" (ngSubmit)="onSubmit()">
-                        <div class="row mb-3">
-                            <label for="id" class="col-sm-2 col-form-label">Id</label>
-                            <div class="col-sm-10">
-                                <input type="number" class="form-control" id="id" formControlName="id">
-                            </div>
-                        </div>
 
                         <div class="row mb-3">
                             <label for="codigo" class="col-sm-2 col-form-label">Código</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="codigo" formControlName="codigo">
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="codigo" formControlName="codigo"
+                                    [ngClass]="{'is-valid' : f.codigo.dirty && !(f.codigo.errors?.required || f.codigo.errors?.minlength) }">
+                                <div *ngIf="f.codigo.dirty && f.codigo.errors?.required" class="text-danger">
+                                    Se debe introducir un código
+                                </div>
+                                <div *ngIf="f.codigo.dirty && f.codigo.errors?.minlength" class="text-danger">
+                                    El código introducido es demasiado corto
+                                </div>
                             </div>
                         </div>
 
@@ -38,7 +39,7 @@
 
                         <div class="row mb-3">
                             <label for="existencias" class="col-sm-2 col-form-label">Existencias</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <input type="number" class="form-control" id="existencias"
                                     formControlName="existencias">
                             </div>
@@ -46,14 +47,14 @@
 
                         <div class="row mb-3">
                             <label for="precio" class="col-sm-2 col-form-label">Precio</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <input type="number" class="form-control" id="precio" formControlName="precio">
                             </div>
                         </div>
 
                         <div class="row mb-3">
                             <label for="descuento" class="col-sm-2 col-form-label">Descuento</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <input type="number" class="form-control" id="descuento" formControlName="descuento">
                             </div>
                         </div>
@@ -66,18 +67,8 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-sm-10 offset-sm-2">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                                    <label class="form-check-label" for="gridCheck1">
-                                        Example checkbox
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" [disabled]="oForm.invalid">Nuevo</button>
+                        <button type="submit" class="btn btn-primary" [disabled]="oForm.invalid">Crear un nuevo
+                            {{entityName}}</button>
 
                     </form>
 

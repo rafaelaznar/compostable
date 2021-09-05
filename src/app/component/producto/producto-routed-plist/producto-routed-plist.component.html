@@ -204,9 +204,9 @@
                         <td class="text-center"><img src="http://localhost:8082/file/{{fila.imagen}}" height="30" />
                         </td>
                         <td class="text-center"><a href="compra/{{entityName}}////{{fila.id}}"
-                                *ngIf="fila.compras>0">{{fila.compras}}</a></td>
+                                *ngIf="fila.compras!>0">{{fila.compras}}</a></td>
                         <td class="text-center"><a href="carrito/{{entityName}}////{{fila.id}}"
-                                *ngIf="fila.carritos>0">{{fila.carritos}}</a>
+                                *ngIf="fila.carritos!>0">{{fila.carritos}}</a>
                         </td>
                         <td>
                             <div class="row">

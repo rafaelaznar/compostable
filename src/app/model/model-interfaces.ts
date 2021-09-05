@@ -75,7 +75,7 @@ export interface objectElement {
 }
 
 export interface IProducto {
-    id: number
+    id: number | null
     codigo: string
     nombre: string
     existencias: number
@@ -83,35 +83,34 @@ export interface IProducto {
     imagen: number
     descuento: number
     tipoproducto: ITipoproducto
-    compras: number
-    carritos: number
+    compras?: number
+    carritos?: number
 }
-
 export interface ITipoproducto {
     id: number
     nombre: string
-    productos: number
+    productos?: number
 }
 
 export class Tipoproducto implements ITipoproducto {
     id: number = 0;
     nombre: string = "";
-    productos: number = 0;
+    productos?: number = 0;
     constructor(id: number) {
         this.id = id;
     }
 }
 
 export class Producto implements IProducto {
-    id: number = 0;
+    id: number | null = 0;
     codigo: string = "";
     nombre: string = "";
     existencias: number = 0;
     precio: number = 0;
     imagen: number = 0;
     descuento: number = 0;
-    compras: number = 0;
-    carritos: number = 0;
+    compras?: number = 0;
+    carritos?: number = 0;
     tipoproducto = new Tipoproducto(0);
     constructor(id: number) {
         this.id = id;
