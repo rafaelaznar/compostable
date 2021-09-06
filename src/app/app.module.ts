@@ -63,6 +63,8 @@ import { ProductoRoutedRemoveComponent } from './component/producto/producto-rou
 import { SnackbarService } from './service/snackbar.service';
 import { ConfigService } from './service/config.service';
 import { ProductoRoutedNewComponent } from './component/producto/producto-routed-new/producto-routed-new.component';
+import { ProductoRoutedContainerViewComponent } from './component/producto/producto-routed-container-view/producto-routed-container-view.component';
+import { ProductoViewComponent } from './component/producto/producto-view/producto-view.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,9 @@ import { ProductoRoutedNewComponent } from './component/producto/producto-routed
     ProductoRoutedViewComponent,
     ProductoRoutedRemoveComponent,
     ProductoRoutedNewComponent,
+
+    ProductoRoutedContainerViewComponent,
+    ProductoViewComponent,
 
     ProductDetailComponent,
     NoPageFoundComponent,
