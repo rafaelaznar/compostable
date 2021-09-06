@@ -1,3 +1,2 @@
-# WildCartAngularClient
-WildCart is an Angular Client for the Trolleyes Server.
-Currently in development.
+# compostable
+Cliente para server de la serie TROLL orientado a componentes 
