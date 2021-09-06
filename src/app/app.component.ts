@@ -12,7 +12,7 @@ import { SessionService } from './service/session.service';
 })
 
 export class AppComponent implements OnInit {
-  title = 'WildCartAngularClient';
+  title = 'compostable';
   oUsuarioSession: IUsuario | null = null;
 
   constructor(public oSessionService: SessionService, private router: Router) {

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "WildCartAngularClient": {
+    "compostable": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -22,7 +22,7 @@
               "rxjs/add/operator/delay",
               "rxjs/add/observable/of"
             ],
-            "outputPath": "dist/WildCartAngularClient",
+            "outputPath": "dist/compostable",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -79,18 +79,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "WildCartAngularClient:build"
+            "browserTarget": "compostable:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "WildCartAngularClient:build:production"
+              "browserTarget": "compostable:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "WildCartAngularClient:build"
+            "browserTarget": "compostable:build"
           }
         },
         "test": {
@@ -128,16 +128,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "WildCartAngularClient:serve"
+            "devServerTarget": "compostable:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "WildCartAngularClient:serve:production"
+              "devServerTarget": "compostable:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "WildCartAngularClient"
+  "defaultProject": "compostable"
 }
